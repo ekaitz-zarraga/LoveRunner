@@ -6,6 +6,13 @@ local entities = {}
 local data = require "data"
 local animation = require "animation"
 
+-- Systems
+local physicsSystem = require('systems/physics_system')
+
+-- Pause Mechanism
+local gameIsPaused = false
+function togglePause() gameIsPaused = not gameIsPaused end
+
 -- TODO
 local inspect = require "lib.inspect"
 
@@ -16,10 +23,6 @@ end
 
 -- Handle focus lose
 function love.focus(f) gameIsPaused = not f end
-function love.update(dt)
-    if gameIsPaused then return end
-    -- The rest of your love.update code goes here
-end
 
 function love.load()
     -- This function loads everything
@@ -27,11 +30,17 @@ function love.load()
     love.graphics.setDefaultFilter( "nearest", "nearest", 1)
     entities = data.init_level( 1, tilesize )
 
+    -- Systems initialization
+    physicsSystem.init()
+
     -- Create the renderable elements
     entities.renderable = {}
     local valid = {"brick", "solidbrick", "ladder", "heart", "rope"}
     for _, i in ipairs(valid) do
-        for k,v in pairs(entities[i]) do table.insert(entities.renderable, v) end
+        for k,v in pairs(entities[i]) do
+            physicsSystem.add(v)
+            table.insert(entities.renderable, v) 
+        end
     end
 
     -- Test animation
@@ -42,6 +51,7 @@ function love.load()
 end
 
 function love.update(dt)
+    if gameIsPaused then return end
     -- This function is called often: dt means delta time since last execution
 
     -- Serious shit
@@ -88,3 +98,29 @@ function love.draw()
 
 end
 
+-- Input handling
+function love.keypressed(key, scancode, isrepeat)
+    if (key == 'p') then
+        togglePause()
+    end
+
+    if (key == 'up') then
+        local heart = entities.heart[1]
+        physicsSystem.move(heart, 0, -10)
+    end
+
+    if (key == 'down') then
+        local heart = entities.heart[1]
+        physicsSystem.move(heart, 0, 10)
+    end
+
+    if (key == 'right') then
+        local heart = entities.heart[1]
+        physicsSystem.move(heart, 10, 0)
+    end
+
+    if (key == 'left') then
+        local heart = entities.heart[1]
+        physicsSystem.move(heart, -10, 0)
+    end
+end
