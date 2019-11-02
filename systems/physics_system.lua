@@ -3,16 +3,18 @@ local bump = require('../lib/bump')
 local debugEnabled = false
 
 local physicsSystem = {
-    bumpWorld = nil
+    bumpWorld = nil,
+    ss = nil
 }
 
-function physicsSystem.init()
-    -- print("Physics System - Init")
-    physicsSystem.bumpWorld = bump.newWorld(128)
+function physicsSystem.init(soundSystem)
+    debug("Physics System - Init")
+    physicsSystem.bumpWorld = bump.newWorld(64)
+    physicsSystem.ss = soundSystem
 end
 
 function physicsSystem.add(entity)
-    -- print(("Adding entity to x=%d y=%d"):format(entity.x, entity.y))
+    debug(("Adding entity to x=%d y=%d"):format(entity.x, entity.y))
     physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
 end
 
@@ -49,6 +51,7 @@ function physicsSystem.move(entity, x, y)
                 collidedEntity.x = -10000
                 collidedEntity.y = -10000
                 entity.hearts = entity.hearts + 1
+                physicsSystem.ss.play('getHeart')
                 debug(("player has %d hearts"):format(entity.hearts))
                 physicsSystem.bumpWorld:remove(collidedEntity)
             end

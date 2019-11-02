@@ -35,7 +35,7 @@ function love.load()
 
     -- Systems initialization
     soundSystem.init()
-    physicsSystem.init()
+    physicsSystem.init(soundSystem)
     enemySystem.init(physicsSystem)
 
     -- Create the renderable elements
