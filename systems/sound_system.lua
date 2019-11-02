@@ -14,7 +14,11 @@ function soundSystem.init()
 end
 
 function soundSystem.play(name)
-    soundSystem.sources[name]:play()
+    local source = soundSystem.sources[name]
+    if (not source) then 
+        error(("The sound '%s' doesn't exist. Check the name in sound_system.lua's soundMap."):format(name)) 
+    end
+    source:play()
 end
 
 return soundSystem
