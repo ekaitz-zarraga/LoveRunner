@@ -18,6 +18,7 @@ function soundSystem.play(name)
     if (not source) then 
         error(("The sound '%s' doesn't exist. Check the name in sound_system.lua's soundMap."):format(name)) 
     end
+    source:stop()
     source:play()
 end
 
