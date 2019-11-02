@@ -91,37 +91,35 @@ function love.update(dt)
 
     local moveX = 0
     local moveY = 0
-    local speed = 100
+    local speed = 50
 
+    local player = entities.player[1]
     if (love.keyboard.isDown('up')) then
-        moveY = moveY - speed
-    end
-
-    if (love.keyboard.isDown('down')) then
-        moveY = moveY + speed
+        player.vy = -speed
+    elseif (love.keyboard.isDown('down')) then
+        player.vy = speed
+    else
+        player.vy = 0
     end
 
     if (love.keyboard.isDown('right')) then
-        moveX = moveX + speed
+        player.vx = speed
+    elseif (love.keyboard.isDown('left')) then
+        player.vx = -speed
+    else
+        player.vx = 0
     end
 
-    if (love.keyboard.isDown('left')) then
-        moveX = moveX - speed
-    end
-
-    local player = entities.player[1]
-    physicsSystem.move(player, moveX * dt, moveY * dt)
+    physicsSystem.move(player, player.vx * dt, player.vy * dt)
     enemySystem.update(dt)
 
-    if moveX < 0 then
+    if player.vx < 0 then
         player.anim.fs = player.walk_anim_l
         player.last_direction = "l"
-    end
-    if moveX > 0 then
+    elseif player.vx > 0 then
         player.anim.fs = player.walk_anim_r
         player.last_direction = "r"
-    end
-    if moveX == 0 then
+    else
         if player.last_direction == "r" then
             player.anim.fs = player.idle_anim_r
         else
@@ -129,7 +127,7 @@ function love.update(dt)
         end
     end
 
-    physicsSystem.move(player, moveX * dt, moveY * dt)
+    physicsSystem.move(player, player.vx * dt, player.vy * dt)
 
     animation.advance(entities.player, dt)
 

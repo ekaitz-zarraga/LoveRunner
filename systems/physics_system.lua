@@ -44,7 +44,9 @@ function physicsSystem.move(entity, x, y)
             end
 
             if collidedEntity.type == "ladder" or collidedEntity.type == "endladder" then
-                entity.x = collidedEntity.x
+                if not(entity.vy == 0) then
+                    entity.x = collidedEntity.x
+                end
             end
 
             if entity.type == "player" and collidedEntity.type == "heart" then
