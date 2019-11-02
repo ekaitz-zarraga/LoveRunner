@@ -5,6 +5,7 @@ local zoom = 2
 local entities = {}
 local data = require "data"
 local animation = require "animation"
+local endladderShown = false
 
 -- Systems
 local physicsSystem = require('systems/physics_system')
@@ -132,6 +133,16 @@ function love.update(dt)
     physicsSystem.move(player, moveX * dt, moveY * dt)
 
     animation.advance(entities.player, dt)
+
+    -- TODO: get the actual number of hearts in the level
+    if player.hearts == 1 and not endladderShown then
+        endladderShown = true
+        print("adding endladder")
+        for k,v in pairs(entities["endladder"]) do
+            physicsSystem.add(v)
+            table.insert(entities.renderable, v)
+        end
+    end
 end
 
 
