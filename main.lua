@@ -144,7 +144,7 @@ function love.update(dt)
         end
     end
 
-    if player.y < 0 then
+    if player.y < -16 then
         togglePause()
         level = level + 1
         endladderShown = false
