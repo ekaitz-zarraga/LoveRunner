@@ -89,8 +89,6 @@ function love.update(dt)
     -- checkCollisions()
     --
 
-    local moveX = 0
-    local moveY = 0
     local speed = 50
 
     local player = entities.player[1]
