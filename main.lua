@@ -134,7 +134,8 @@ function love.update(dt)
 
     animation.advance(entities.player, dt)
 
-    if player.hearts == #entities.heart and not endladderShown then
+    -- TODO: for testing, should revert to #entities.heart
+    if player.hearts == 1 and not endladderShown then
         endladderShown = true
         print("adding endladder")
         for k,v in pairs(entities["endladder"]) do

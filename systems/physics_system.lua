@@ -59,7 +59,24 @@ function physicsSystem.move(entity, inputX, inputY)
 
             if collidedEntity.type == "ladder" or collidedEntity.type == "endladder" then
                 if not(entity.vy == 0) then
-                    entity.x = collidedEntity.x
+                    local w = 20
+                    local h = 20
+                    local l = entity.x
+                    local t = entity.y
+                    local items, len = physicsSystem.bumpWorld:queryRect(l,t,w,h)
+                    local nearest = nil
+                    for _,i in ipairs(items) do
+                        if i.type == "ladder" or i.type == "endladder" then
+                            if nearest == nil then
+                                nearest = i
+                            elseif math.abs( i.x - entity.x ) < math.abs( nearest.x - entity.x ) then
+                                nearest = i
+                            end
+                        end
+                    end
+                    if not(nearest == nil) then
+                        entity.x = nearest.x
+                    end
                 end
             end
 

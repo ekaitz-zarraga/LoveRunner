@@ -1,8 +1,8 @@
 local bump = require('../lib/bump')
 
 local enemySystem = {
-	enemies = {},
-	ps = nil
+    enemies = {},
+    ps = nil
 }
 
 function enemySystem.init(physicsSytem)
@@ -11,14 +11,14 @@ function enemySystem.init(physicsSytem)
 end
 
 function enemySystem.clear()
-	enemySystem.enemies = {}
-	enemySystem.ps = nil
+    enemySystem.enemies = {}
+    enemySystem.ps = nil
 end
 
 function enemySystem.update(dt)
-	for _,enemy in ipairs(enemySystem.enemies) do
-		enemySystem.ps.move(enemy,1*dt,0)
-	end
+    for _,enemy in ipairs(enemySystem.enemies) do
+        enemySystem.ps.move(enemy,1*dt,0)
+    end
 end
 
 function enemySystem.add(enemy)
