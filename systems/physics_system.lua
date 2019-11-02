@@ -38,6 +38,10 @@ function physicsSystem.move(entity, x, y)
         -- TODO: player is not falling completely to the ground because move() rounds it
         y = 0.25
     end
+    -- TODO: this fixes the crash on level change, but no idea why
+    if entity.type == "enemy" then
+        return
+    end
     local actualX, actualY, cols, len = physicsSystem.bumpWorld:move(entity, entity.x + x, entity.y + y, collisionFilter)
     entity.x = actualX
     entity.y = actualY

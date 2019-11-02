@@ -148,10 +148,11 @@ function love.update(dt)
         togglePause()
         level = level + 1
         endladderShown = false
-        physicsSystem.clear(entities)
+        physicsSystem.clear()
         enemySystem.clear()
         entities = {}
         loadLevel()
+        togglePause()
     end
 end
 
