@@ -174,4 +174,7 @@ function love.keypressed(key, scancode, isrepeat)
     if (key == 'p') then
         togglePause()
     end
+    if (key == 'r') then
+        love.event.quit("restart")
+    end
 end
