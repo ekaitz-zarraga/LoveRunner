@@ -1,4 +1,5 @@
 local bump = require('../lib/bump')
+local entities = require "entities"
 
 local debugEnabled = false
 
@@ -10,6 +11,9 @@ local physicsSystem = {
 function physicsSystem.init(soundSystem)
     debug("Physics System - Init")
     physicsSystem.bumpWorld = bump.newWorld(64)
+    -- Walls left and right of the world
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 0, -1, 1, 256)
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 448, 0, 1, 256)
     physicsSystem.ss = soundSystem
 end
 
