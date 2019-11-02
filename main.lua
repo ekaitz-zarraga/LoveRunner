@@ -142,6 +142,8 @@ function love.draw()
 
     love.graphics.scale(zoom,zoom)
 
+    love.graphics.print(("Hearts: %d"):format(entities.player[1].hearts))
+
     -- Only render elements in "renderable" list
     for _,v in pairs(entities.renderable) do
         if not (v.img == nil) then

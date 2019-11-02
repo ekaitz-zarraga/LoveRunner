@@ -86,6 +86,7 @@ end
 function entities.newPlayer( x, y )
     return {
         type = "player",
+        hearts = 0,
         x   = x,
         y   = y,
         vx  = 0,

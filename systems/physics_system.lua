@@ -27,9 +27,11 @@ function physicsSystem.move(entity, x, y)
         if cols[1].other.type == "ladder" then
             entity.x = cols[1].other.x
         end
-        if cols[1].other.type == "heart" then
+        if entity.type == "player" and cols[1].other.type == "heart" then
             cols[1].other.x = -10000
             cols[1].other.y = -10000
+            entity.hearts = entity.hearts + 1
+            print(("player has %d hearts"):format(entity.hearts))
             physicsSystem.bumpWorld:remove(cols[1].other)
         end
     end
