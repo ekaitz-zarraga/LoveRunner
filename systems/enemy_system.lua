@@ -15,9 +15,19 @@ function enemySystem.clear()
     enemySystem.ps = nil
 end
 
-function enemySystem.update(dt)
-    for _,enemy in ipairs(enemySystem.enemies) do
-        enemySystem.ps.move(enemy,1*dt,0)
+function enemySystem.update(dt, player)
+	for _,enemy in ipairs(enemySystem.enemies) do
+		if enemy.x - player.x < 0 then
+			moveX = 50
+		else
+			moveX = - 50
+		end
+		if enemy.y - player.y < 0 then
+			moveY = 50
+		else
+			moveY = - 50
+		end
+        enemySystem.ps.move(enemy, moveX*dt, moveY*dt)
     end
 end
 
