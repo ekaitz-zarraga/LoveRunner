@@ -57,12 +57,6 @@ function love.load()
         enemySystem.add(v)
     end
 
-    -- Test animation
-    -- TODO REMOVE THIS
-    for _,brick in ipairs(entities.brick) do
-        brick.anim.fs = brick.reappearing_anim
-    end
-
     -- Sound test
     soundSystem.play('finish')
 end
@@ -139,8 +133,7 @@ function love.update(dt)
 
     animation.advance(entities.player, dt)
 
-    -- TODO: get the actual number of hearts in the level
-    if player.hearts == 1 and not endladderShown then
+    if player.hearts == #entities.heart and not endladderShown then
         endladderShown = true
         print("adding endladder")
         for k,v in pairs(entities["endladder"]) do
