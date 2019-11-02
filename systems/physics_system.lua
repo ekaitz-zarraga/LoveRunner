@@ -8,7 +8,7 @@ local physicsSystem = {
 
 function physicsSystem.init()
     -- print("Physics System - Init")
-    physicsSystem.bumpWorld = bump.newWorld(64)
+    physicsSystem.bumpWorld = bump.newWorld(128)
 end
 
 function physicsSystem.add(entity)
@@ -18,6 +18,11 @@ end
 
 function physicsSystem.move(entity, x, y)
     oldY = entity.y
+    local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1)
+    if len == 0 then
+        -- TODO: player is not falling completely to the ground because move() rounds it
+        y = 0.25
+    end
     local actualX, actualY, cols, len = physicsSystem.bumpWorld:move(entity, entity.x + x, entity.y + y, collisionFilter)
     entity.x = actualX
     entity.y = actualY
