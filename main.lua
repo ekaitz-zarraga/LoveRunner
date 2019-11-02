@@ -39,7 +39,7 @@ function love.load()
     for _, i in ipairs(valid) do
         for k,v in pairs(entities[i]) do
             physicsSystem.add(v)
-            table.insert(entities.renderable, v) 
+            table.insert(entities.renderable, v)
         end
     end
 
@@ -97,8 +97,25 @@ function love.update(dt)
         moveX = moveX - speed
     end
 
-    local heart = entities.heart[1]
-    physicsSystem.move(heart, moveX * dt, moveY * dt)
+    local player = entities.player[1]
+
+    if moveX < 0 then
+        player.anim.fs = player.walk_anim_l
+        player.last_direction = "l"
+    end
+    if moveX > 0 then
+        player.anim.fs = player.walk_anim_r
+        player.last_direction = "r"
+    end
+    if moveX == 0 then
+        if player.last_direction == "r" then
+            player.anim.fs = player.idle_anim_r
+        else
+            player.anim.fs = player.idle_anim_l
+        end
+    end
+
+    physicsSystem.move(player, moveX * dt, moveY * dt)
 
     animation.advance(entities.player, dt)
 end

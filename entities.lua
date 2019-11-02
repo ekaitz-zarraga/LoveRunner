@@ -82,6 +82,7 @@ function entities.newPlayer( x, y )
         vx  = 0,
         vy  = 0,
         img = nil,
+        last_direction = nil,
         fall_anim_l = {
             love.graphics.newImage('assets/character/Fall_l_0.png'),
             love.graphics.newImage('assets/character/Fall_l_1.png'),
