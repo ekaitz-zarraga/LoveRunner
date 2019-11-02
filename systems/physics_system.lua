@@ -40,7 +40,7 @@ function physicsSystem.move(entity, x, y)
             debug((" -    Entity type: %s"):format(collidedEntity.type))
 
             if collidedEntity.type == "rope" then
-                entity.y = oldY
+                entity.y = collidedEntity.y - 1
             end
 
             if collidedEntity.type == "ladder" or collidedEntity.type == "endladder" then
