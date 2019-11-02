@@ -22,7 +22,7 @@ function physicsSystem.add(entity)
     physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
 end
 
-function physicsSystem.clear(entities)
+function physicsSystem.clear()
     for _, e in ipairs(physicsSystem.bumpWorld:getItems()) do
         physicsSystem.bumpWorld:remove(e)
     end
