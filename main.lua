@@ -6,6 +6,7 @@ local entities = {}
 local data = require "data"
 local animation = require "animation"
 local endladderShown = false
+local level = 1
 
 -- Systems
 local physicsSystem = require('systems/physics_system')
@@ -31,10 +32,14 @@ function love.load()
     -- This function loads everything
     love.window.setMode(tilesize * 28 * zoom, tilesize * 16 * zoom, { vsync=false, fullscreen=false })
     love.graphics.setDefaultFilter( "nearest", "nearest", 1)
-    entities = data.init_level( 1, tilesize )
+    soundSystem.init()
+    loadLevel()
+end
+
+function loadLevel()
+    entities = data.init_level( level, tilesize )
 
     -- Systems initialization
-    soundSystem.init()
     physicsSystem.init(soundSystem)
     enemySystem.init(physicsSystem)
 
@@ -129,13 +134,25 @@ function love.update(dt)
 
     animation.advance(entities.player, dt)
 
-    if player.hearts == #entities.heart and not endladderShown then
+    -- TODO: for testing, should revert to #entities.heart
+    if player.hearts == 1 and not endladderShown then
         endladderShown = true
         print("adding endladder")
         for k,v in pairs(entities["endladder"]) do
             physicsSystem.add(v)
             table.insert(entities.renderable, 0, v)
         end
+    end
+
+    if player.y < 0 then
+        togglePause()
+        level = level + 1
+        endladderShown = false
+        physicsSystem.clear()
+        enemySystem.clear()
+        entities = {}
+        loadLevel()
+        togglePause()
     end
 end
 

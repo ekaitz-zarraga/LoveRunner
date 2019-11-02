@@ -12,8 +12,9 @@ function physicsSystem.init(soundSystem)
     debug("Physics System - Init")
     physicsSystem.bumpWorld = bump.newWorld(64)
     -- Walls left and right of the world
-    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 0, -1, 1, 256)
-    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 448, 0, 1, 256)
+    -- We need an extra pixel on each side for ladders on the edge of the map (eg level 4)
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), -1, -1, 1, 256)
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 449, 0, 1, 256)
     physicsSystem.ss = soundSystem
 end
 
@@ -22,12 +23,25 @@ function physicsSystem.add(entity)
     physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
 end
 
+function physicsSystem.clear()
+    for _, e in ipairs(physicsSystem.bumpWorld:getItems()) do
+        physicsSystem.bumpWorld:remove(e)
+    end
+
+    bumpWorld = nil
+    ss = nil
+end
+
 function physicsSystem.move(entity, x, y)
     oldY = entity.y
     local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1)
     if len == 0 then
         -- TODO: player is not falling completely to the ground because move() rounds it
         y = 0.25
+    end
+    -- TODO: this fixes the crash on level change, but no idea why
+    if entity.type == "enemy" then
+        return
     end
     local actualX, actualY, cols, len = physicsSystem.bumpWorld:move(entity, entity.x + x, entity.y + y, collisionFilter)
     entity.x = actualX
