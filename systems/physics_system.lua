@@ -34,7 +34,7 @@ end
 
 function physicsSystem.move(entity, inputX, inputY)
     oldY = entity.y
-    local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1)
+    local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1, groundFilter)
     if len == 0 then
         -- TODO: player is not falling completely to the ground because move() rounds it
         inputY = 0.25
@@ -99,6 +99,11 @@ function collisionFilter(item, other)
         return "cross"
     end
     return "slide"
+end
+
+function groundFilter(item)
+    print(item.type)
+    return not (item.type == "heart")
 end
 
 function debug(text)
