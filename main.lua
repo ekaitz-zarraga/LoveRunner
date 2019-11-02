@@ -118,6 +118,7 @@ function love.update(dt)
 
     if physicsSystem.isGameOver then
         print("Game over")
+        soundSystem.play("finish")
         togglePause()
     end
 
@@ -180,7 +181,7 @@ function love.draw()
 
     if physicsSystem.isGameOver then
         -- TODO: this is not properly centered
-        love.graphics.print({{255, 0, 0}, "Game over"}, 128, 112, 0, 2, 2)
+        love.graphics.print({{255, 0, 0}, ("Game over (level %d)"):format(level)}, 128, 112, 0, 2, 2)
     end
 
 end
