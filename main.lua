@@ -78,6 +78,29 @@ function love.update(dt)
     -- checkCollisions()
     --
 
+    local moveX = 0
+    local moveY = 0
+    local speed = 100
+
+    if (love.keyboard.isDown('up')) then
+        moveY = moveY - speed
+    end
+
+    if (love.keyboard.isDown('down')) then
+        moveY = moveY + speed
+    end
+
+    if (love.keyboard.isDown('right')) then
+        moveX = moveX + speed
+    end
+
+    if (love.keyboard.isDown('left')) then
+        moveX = moveX - speed
+    end
+
+    local heart = entities.heart[1]
+    physicsSystem.move(heart, moveX * dt, moveY * dt)
+
     animation.advance(entities.brick, dt)
 end
 
@@ -102,25 +125,5 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if (key == 'p') then
         togglePause()
-    end
-
-    if (key == 'up') then
-        local heart = entities.heart[1]
-        physicsSystem.move(heart, 0, -10)
-    end
-
-    if (key == 'down') then
-        local heart = entities.heart[1]
-        physicsSystem.move(heart, 0, 10)
-    end
-
-    if (key == 'right') then
-        local heart = entities.heart[1]
-        physicsSystem.move(heart, 10, 0)
-    end
-
-    if (key == 'left') then
-        local heart = entities.heart[1]
-        physicsSystem.move(heart, -10, 0)
     end
 end
