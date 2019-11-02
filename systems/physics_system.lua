@@ -54,7 +54,6 @@ function physicsSystem.move(entity, inputX, inputY)
             debug((" -    Entity type: %s"):format(collidedEntity.type))
 
             if collidedEntity.type == "rope" and inputY <= 0 then
-                print(inputY)
                 entity.y = collidedEntity.y - 1
             end
 
