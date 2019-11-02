@@ -10,6 +10,7 @@ local endladderShown = false
 -- Systems
 local physicsSystem = require('systems/physics_system')
 local enemySystem = require('systems/enemy_system')
+local soundSystem = require('systems/sound_system')
 
 -- Pause Mechanism
 local gameIsPaused = false
@@ -33,6 +34,7 @@ function love.load()
     entities = data.init_level( 1, tilesize )
 
     -- Systems initialization
+    soundSystem.init()
     physicsSystem.init()
     enemySystem.init(physicsSystem)
 
@@ -60,6 +62,9 @@ function love.load()
     for _,brick in ipairs(entities.brick) do
         brick.anim.fs = brick.reappearing_anim
     end
+
+    -- Sound test
+    soundSystem.play('finish')
 end
 
 function love.update(dt)
