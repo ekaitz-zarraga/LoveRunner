@@ -6,10 +6,6 @@ function entities.newBrick( x, y )
         y   = y,
         time_to_appear = nil,
         img = love.graphics.newImage('assets/brick.png'),
-        reappearing_anim = {
-            love.graphics.newImage('assets/brick.png'),
-            love.graphics.newImage('assets/empty.png'),
-        },
         anim = {
             fpos = 1,
             fs = nil,
@@ -86,6 +82,42 @@ function entities.newPlayer( x, y )
         vx  = 0,
         vy  = 0,
         img = nil,
+        fall_anim_l = {
+            love.graphics.newImage('assets/character/Fall_l_0.png'),
+            love.graphics.newImage('assets/character/Fall_l_1.png'),
+            love.graphics.newImage('assets/character/Fall_l_2.png'),
+            love.graphics.newImage('assets/character/Fall_l_3.png'),
+        },
+        walk_anim_l = {
+            love.graphics.newImage('assets/character/Walk_l_0.png'),
+            love.graphics.newImage('assets/character/Walk_l_1.png'),
+            love.graphics.newImage('assets/character/Walk_l_2.png'),
+            love.graphics.newImage('assets/character/Walk_l_3.png'),
+        },
+        idle_anim_l = {
+            love.graphics.newImage('assets/character/Idle_l_0.png'),
+            love.graphics.newImage('assets/character/Idle_l_1.png'),
+            love.graphics.newImage('assets/character/Idle_l_2.png'),
+            love.graphics.newImage('assets/character/Idle_l_3.png'),
+        },
+        fall_anim_r = {
+            love.graphics.newImage('assets/character/Fall_r_0.png'),
+            love.graphics.newImage('assets/character/Fall_r_1.png'),
+            love.graphics.newImage('assets/character/Fall_r_2.png'),
+            love.graphics.newImage('assets/character/Fall_r_3.png'),
+        },
+        walk_anim_r = {
+            love.graphics.newImage('assets/character/Walk_r_0.png'),
+            love.graphics.newImage('assets/character/Walk_r_1.png'),
+            love.graphics.newImage('assets/character/Walk_r_2.png'),
+            love.graphics.newImage('assets/character/Walk_r_3.png'),
+        },
+        idle_anim_r = {
+            love.graphics.newImage('assets/character/Idle_r_0.png'),
+            love.graphics.newImage('assets/character/Idle_r_1.png'),
+            love.graphics.newImage('assets/character/Idle_r_2.png'),
+            love.graphics.newImage('assets/character/Idle_r_3.png'),
+        },
         anim = {
             fpos     = 1,
             fs       = nil, -- will be an array-like table

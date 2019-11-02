@@ -35,7 +35,7 @@ function love.load()
 
     -- Create the renderable elements
     entities.renderable = {}
-    local valid = {"brick", "solidbrick", "ladder", "heart", "rope"}
+    local valid = {"brick", "solidbrick", "ladder", "heart", "rope", "player"}
     for _, i in ipairs(valid) do
         for k,v in pairs(entities[i]) do
             physicsSystem.add(v)
@@ -43,10 +43,9 @@ function love.load()
         end
     end
 
-    -- Test animation
-    -- TODO REMOVE THIS
-    for _,brick in ipairs(entities.brick) do
-        brick.anim.fs = brick.reappearing_anim
+    -- Player animation
+    for _,player in ipairs(entities.player) do
+        player.anim.fs = player.idle_anim_l
     end
 end
 
@@ -101,7 +100,7 @@ function love.update(dt)
     local heart = entities.heart[1]
     physicsSystem.move(heart, moveX * dt, moveY * dt)
 
-    animation.advance(entities.brick, dt)
+    animation.advance(entities.player, dt)
 end
 
 
