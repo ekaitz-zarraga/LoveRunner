@@ -12,8 +12,9 @@ function physicsSystem.init(soundSystem)
     debug("Physics System - Init")
     physicsSystem.bumpWorld = bump.newWorld(64)
     -- Walls left and right of the world
-    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 0, -1, 1, 256)
-    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 448, 0, 1, 256)
+    -- We need an extra pixel on each side for ladders on the edge of the map (eg level 4)
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), -1, -1, 1, 256)
+    physicsSystem.bumpWorld:add(entities.newBrick(1, 1), 449, 0, 1, 256)
     physicsSystem.ss = soundSystem
 end
 
@@ -22,7 +23,7 @@ function physicsSystem.add(entity)
     physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
 end
 
-function physicsSystem.clear(entities)
+function physicsSystem.clear()
     for _, e in ipairs(physicsSystem.bumpWorld:getItems()) do
         physicsSystem.bumpWorld:remove(e)
     end
