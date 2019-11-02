@@ -8,6 +8,7 @@ local animation = require "animation"
 
 -- Systems
 local physicsSystem = require('systems/physics_system')
+local enemySystem = require('systems/enemy_system')
 
 -- Pause Mechanism
 local gameIsPaused = false
@@ -32,10 +33,15 @@ function love.load()
 
     -- Systems initialization
     physicsSystem.init()
+    enemySystem.init(physicsSystem)
 
     -- Create the renderable elements
     entities.renderable = {}
+<<<<<<< Updated upstream
     local valid = {"brick", "solidbrick", "ladder", "heart", "rope", "player"}
+=======
+    local valid = {"brick", "solidbrick", "ladder", "heart", "rope", "enemy"}
+>>>>>>> Stashed changes
     for _, i in ipairs(valid) do
         for k,v in pairs(entities[i]) do
             physicsSystem.add(v)
@@ -43,9 +49,20 @@ function love.load()
         end
     end
 
+<<<<<<< Updated upstream
     -- Player animation
     for _,player in ipairs(entities.player) do
         player.anim.fs = player.idle_anim_l
+=======
+    for k,v in pairs(entities.enemy) do
+        enemySystem.add(v)
+    end
+
+    -- Test animation
+    -- TODO REMOVE THIS
+    for _,brick in ipairs(entities.brick) do
+        brick.anim.fs = brick.reappearing_anim
+>>>>>>> Stashed changes
     end
 end
 
@@ -97,7 +114,13 @@ function love.update(dt)
         moveX = moveX - speed
     end
 
+<<<<<<< Updated upstream
     local player = entities.player[1]
+=======
+    local heart = entities.heart[1]
+    physicsSystem.move(heart, moveX * dt, moveY * dt)
+    enemySystem.update(dt)
+>>>>>>> Stashed changes
 
     if moveX < 0 then
         player.anim.fs = player.walk_anim_l

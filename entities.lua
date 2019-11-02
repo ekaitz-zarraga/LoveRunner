@@ -67,7 +67,7 @@ function entities.newEnemy( x, y )
         y   = y,
         vx  = 0,
         vy  = 0,
-        img = nil,
+        img = love.graphics.newImage('assets/enemy.png'),
         anim = {
             fpos     = 1,
             fs       = nil, -- will be an array-like table
