@@ -24,7 +24,7 @@ function physicsSystem.move(entity, x, y)
         if cols[1].other.type == "rope" then
             entity.y = oldY
         end
-        if cols[1].other.type == "ladder" then
+        if cols[1].other.type == "ladder" or cols[1].other.type == "endladder" then
             entity.x = cols[1].other.x
         end
         if entity.type == "player" and cols[1].other.type == "heart" then
@@ -38,13 +38,7 @@ function physicsSystem.move(entity, x, y)
 end
 
 function collisionFilter(item, other)
-    if other.type == "ladder" then
-        return "cross"
-    end
-    if other.type == "heart" then
-        return "cross"
-    end
-    if other.type == "rope" then
+    if other.type == "ladder" or other.type == "endladder" or other.type == "heart" or other.type == "rope" then
         return "cross"
     end
     return "slide"

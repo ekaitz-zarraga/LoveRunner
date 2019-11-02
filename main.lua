@@ -140,7 +140,7 @@ function love.update(dt)
         print("adding endladder")
         for k,v in pairs(entities["endladder"]) do
             physicsSystem.add(v)
-            table.insert(entities.renderable, v)
+            table.insert(entities.renderable, 0, v)
         end
     end
 end

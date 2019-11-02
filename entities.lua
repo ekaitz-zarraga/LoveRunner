@@ -43,7 +43,7 @@ end
 
 function entities.newEndLadder( x, y )
     return {
-        type "endladder",
+        type = "endladder",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/ladder.png')
