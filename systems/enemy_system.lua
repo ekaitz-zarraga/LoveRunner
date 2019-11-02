@@ -11,8 +11,8 @@ function enemySystem.init(physicsSytem)
 end
 
 function enemySystem.clear()
-	enemies = {}
-	ps = nil
+	enemySystem.enemies = {}
+	enemySystem.ps = nil
 end
 
 function enemySystem.update(dt)
