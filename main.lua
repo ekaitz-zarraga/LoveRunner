@@ -152,6 +152,7 @@ function love.update(dt)
         enemySystem.clear()
         entities = {}
         loadLevel()
+        togglePause()
     end
 end
 
