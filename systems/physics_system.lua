@@ -5,7 +5,8 @@ local debugEnabled = false
 
 local physicsSystem = {
     bumpWorld = nil,
-    ss = nil
+    ss = nil,
+    isGameOver = false
 }
 
 function physicsSystem.init(soundSystem)
@@ -89,6 +90,9 @@ function physicsSystem.move(entity, inputX, inputY)
                 physicsSystem.bumpWorld:remove(collidedEntity)
             end
 
+            if entity.type == "enemy" and collidedEntity.type == "player" then
+                physicsSystem.isGameOver = true
+            end
         end
 
     end

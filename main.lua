@@ -116,6 +116,11 @@ function love.update(dt)
     physicsSystem.move(player, player.vx * dt, player.vy * dt)
     enemySystem.update(dt, player)
 
+    if physicsSystem.isGameOver then
+        print("Game over")
+        togglePause()
+    end
+
     if player.vx < 0 then
         player.anim.fs = player.walk_anim_l
         player.last_direction = "l"
@@ -173,11 +178,16 @@ function love.draw()
         end
     end
 
+    if physicsSystem.isGameOver then
+        -- TODO: this is not properly centered
+        love.graphics.print({{255, 0, 0}, "Game over"}, 128, 112, 0, 2, 2)
+    end
+
 end
 
 -- Input handling
 function love.keypressed(key, scancode, isrepeat)
-    if (key == 'p') then
+    if (key == 'p' and not physicsSystem.isGameOver) then
         togglePause()
     end
     if (key == 'r') then
