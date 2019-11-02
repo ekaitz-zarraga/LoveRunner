@@ -22,6 +22,15 @@ function physicsSystem.add(entity)
     physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
 end
 
+function physicsSystem.clear(entities)
+    for _, e in ipairs(physicsSystem.bumpWorld:getItems()) do
+        physicsSystem.bumpWorld:remove(e)
+    end
+
+    bumpWorld = nil
+    ss = nil
+end
+
 function physicsSystem.move(entity, x, y)
     oldY = entity.y
     local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1)
