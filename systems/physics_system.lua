@@ -32,14 +32,14 @@ function physicsSystem.clear()
     physicsSystem.ss = nil
 end
 
-function physicsSystem.move(entity, x, y)
+function physicsSystem.move(entity, inputX, inputY)
     oldY = entity.y
     local items, len = physicsSystem.bumpWorld:queryRect(entity.x, entity.y + 16, 16, 1)
     if len == 0 then
         -- TODO: player is not falling completely to the ground because move() rounds it
-        y = 0.25
+        inputY = 0.25
     end
-    local actualX, actualY, cols, len = physicsSystem.bumpWorld:move(entity, entity.x + x, entity.y + y, collisionFilter)
+    local actualX, actualY, cols, len = physicsSystem.bumpWorld:move(entity, entity.x + inputX, entity.y + inputY, collisionFilter)
     entity.x = actualX
     entity.y = actualY
 
@@ -53,7 +53,7 @@ function physicsSystem.move(entity, x, y)
             debug((" - Collision type: %s"):format(col.type))
             debug((" -    Entity type: %s"):format(collidedEntity.type))
 
-            if collidedEntity.type == "rope" then
+            if collidedEntity.type == "rope" and inputY < 0 then
                 entity.y = collidedEntity.y - 1
             end
 
