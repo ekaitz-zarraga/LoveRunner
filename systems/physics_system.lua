@@ -53,7 +53,8 @@ function physicsSystem.move(entity, inputX, inputY)
             debug((" - Collision type: %s"):format(col.type))
             debug((" -    Entity type: %s"):format(collidedEntity.type))
 
-            if collidedEntity.type == "rope" and inputY < 0 then
+            if collidedEntity.type == "rope" and inputY <= 0 then
+                print(inputY)
                 entity.y = collidedEntity.y - 1
             end
 
@@ -102,7 +103,6 @@ function collisionFilter(item, other)
 end
 
 function groundFilter(item)
-    print(item.type)
     return not (item.type == "heart")
 end
 
