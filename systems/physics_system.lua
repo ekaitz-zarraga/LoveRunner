@@ -21,12 +21,17 @@ function physicsSystem.move(entity, x, y)
     entity.y = actualY
     if len > 1 then
         print(cols[1].other.type)
-    end
-    if len > 1 and cols[1].other.type == "rope" then
-        entity.y = oldY
-    end
-    if len > 1 and cols[1].other.type == "ladder" then
-        entity.x = cols[1].other.x
+        if cols[1].other.type == "rope" then
+            entity.y = oldY
+        end
+        if cols[1].other.type == "ladder" then
+            entity.x = cols[1].other.x
+        end
+        if cols[1].other.type == "heart" then
+            cols[1].other.x = -10000
+            cols[1].other.y = -10000
+            physicsSystem.bumpWorld:remove(cols[1].other)
+        end
     end
 end
 
