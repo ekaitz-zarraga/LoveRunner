@@ -2,6 +2,7 @@ local entities = {}
 
 function entities.newBrick( x, y )
     return {
+        type = "brick",
         x   = x,
         y   = y,
         time_to_appear = nil,
@@ -15,6 +16,7 @@ end
 
 function entities.newSolidBrick( x, y )
     return {
+        type = "solidbrick",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/solidbrick.png')
@@ -23,6 +25,7 @@ end
 
 function entities.newFalseBrick( x, y )
     return {
+        type = "falsebrick",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/brick.png')
@@ -31,6 +34,7 @@ end
 
 function entities.newLadder( x, y )
     return {
+        type = "ladder",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/ladder.png')
@@ -39,6 +43,7 @@ end
 
 function entities.newEndLadder( x, y )
     return {
+        type "endladder",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/ladder.png')
@@ -47,6 +52,7 @@ end
 
 function entities.newRope( x, y )
     return {
+        type = "rope",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/rope.png')
@@ -55,6 +61,7 @@ end
 
 function entities.newHeart( x, y )
     return {
+        type = "heart",
         x   = x,
         y   = y,
         img = love.graphics.newImage('assets/heart.png')
@@ -63,6 +70,7 @@ end
 
 function entities.newEnemy( x, y )
     return {
+        type = "enemy",
         x   = x,
         y   = y,
         vx  = 0,
@@ -77,6 +85,7 @@ end
 
 function entities.newPlayer( x, y )
     return {
+        type = "player",
         x   = x,
         y   = y,
         vx  = 0,
