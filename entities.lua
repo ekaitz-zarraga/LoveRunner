@@ -5,7 +5,7 @@ function entities.newBrick( x, y )
         type = "brick",
         x   = x,
         y   = y,
-        time_to_appear = nil,
+        time_to_appear = 0,
         img = love.graphics.newImage('assets/brick.png'),
         anim = {
             fpos = 1,

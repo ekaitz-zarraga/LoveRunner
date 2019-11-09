@@ -20,13 +20,22 @@ function physicsSystem.init(soundSystem)
 end
 
 function physicsSystem.add(entity)
-    debug(("Adding entity to x=%d y=%d"):format(entity.x, entity.y))
-    physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
+    if not physicsSystem.bumpWorld:hasItem(entity) then
+        physicsSystem.bumpWorld:add(entity, entity.x, entity.y, 16, 16)
+        debug(("Adding entity to x=%d y=%d"):format(entity.x, entity.y))
+    end
+end
+
+function physicsSystem.remove(entity)
+    if physicsSystem.bumpWorld:hasItem(entity) then
+        physicsSystem.bumpWorld:remove(entity, entity.x, entity.y, 16, 16)
+        debug(("Removing entity to x=%d y=%d"):format(entity.x, entity.y))
+    end
 end
 
 function physicsSystem.clear()
     for _, e in ipairs(physicsSystem.bumpWorld:getItems()) do
-        physicsSystem.bumpWorld:remove(e)
+        physicsSystem.remove(e)
     end
 
     physicsSystem.bumpWorld = nil
@@ -87,7 +96,7 @@ function physicsSystem.move(entity, inputX, inputY)
                 entity.hearts = entity.hearts + 1
                 physicsSystem.ss.play('getHeart')
                 debug(("player has %d hearts"):format(entity.hearts))
-                physicsSystem.bumpWorld:remove(collidedEntity)
+                physicsSystem.remove(collidedEntity)
             end
 
             if entity.type == "enemy" and collidedEntity.type == "player" then
@@ -95,6 +104,17 @@ function physicsSystem.move(entity, inputX, inputY)
             end
         end
 
+    end
+end
+
+function physicsSystem.dig(player, offset)
+    local actualX, actualY, cols, len = physicsSystem.bumpWorld:check(player, player.x+8 + offset, player.y+16)
+    --                                                                               ^^^ middle of player ^^^ under the player
+    if #cols > 0 then
+        if cols[1]["other"].type=="brick" then
+            cols[1]["other"].y = 500 --TODO: it should just hide without changing `.y`
+            cols[1]["other"].time_to_appear=10
+        end
     end
 end
 

@@ -11,13 +11,14 @@ local level = 1
 -- Systems
 local physicsSystem = require('systems/physics_system')
 local enemySystem = require('systems/enemy_system')
+local brickSystem = require('systems/brick_system')
 local soundSystem = require('systems/sound_system')
 
 -- Pause Mechanism
 local gameIsPaused = false
 function togglePause() gameIsPaused = not gameIsPaused end
 
--- TODO
+-- To dump vars
 local inspect = require "lib.inspect"
 
 function love.quit()
@@ -42,6 +43,7 @@ function loadLevel()
     -- Systems initialization
     physicsSystem.init(soundSystem)
     enemySystem.init(physicsSystem)
+    brickSystem.init(physicsSystem)
 
     -- Create the renderable elements
     entities.renderable = {}
@@ -60,6 +62,10 @@ function loadLevel()
 
     for k,v in pairs(entities.enemy) do
         enemySystem.add(v)
+    end
+
+    for k,v in pairs(entities.brick) do
+        brickSystem.add(v)
     end
 
     -- Sound test
@@ -115,6 +121,7 @@ function love.update(dt)
 
     physicsSystem.move(player, player.vx * dt, player.vy * dt)
     enemySystem.update(dt, player)
+    brickSystem.update(dt)
 
     if physicsSystem.isGameOver then
         print("Game over")
@@ -159,6 +166,10 @@ function love.update(dt)
         loadLevel()
         togglePause()
     end
+
+    if player.y > tilesize*9* zoom then --FIXME: can't make love.window.getHeight() work
+        physicsSystem.isGameOver = true
+    end
 end
 
 
@@ -195,5 +206,13 @@ function love.keypressed(key, scancode, isrepeat)
     end
     if (key == 'escape') then
         love.event.quit()
+    end
+
+    local player = entities.player[1]
+    if (key == 'z') then
+        physicsSystem.dig(player, tilesize)
+    end
+    if (key == 'x') then
+        physicsSystem.dig(player, -tilesize)
     end
 end
